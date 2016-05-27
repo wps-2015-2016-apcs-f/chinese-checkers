@@ -16,7 +16,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>chinesecheckers.Board</mainClass>
+              <mainClass>chinesecheckers.ChineseCheckers</mainClass>
             </manifest>
           </archive>
         </configuration>

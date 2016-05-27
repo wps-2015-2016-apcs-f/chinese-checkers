@@ -21,5 +21,6 @@ public class ChineseCheckers {
      */
     public static void main(String[] args) {
         System.out.println("# ChineseCheckers");
+        Board.main(null);
     }
 }
