@@ -1,5 +1,5 @@
 /*
- * ChineseCheckersTest.java
+ * GridTest.java
  *
  * @author 2015-2016 APCS A-Block
  * @author David C. Petty <dpetty@winchesterps.org>
@@ -9,9 +9,9 @@ package chinesecheckers;
 import org.junit.*;
 
 /**
- * Unit test for {@link ChineseCheckers}.
+ * Unit test for {@link Grid}.
  */
-public class ChineseCheckersTest {
+public class GridTest {
     /**
      * Set up before every test.
      */
