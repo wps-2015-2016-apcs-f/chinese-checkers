@@ -5,7 +5,40 @@
  * @author David C. Petty <dpetty@winchesterps.org>
  */
 package chinesecheckers;
+/*
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
+public class Board extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Hello World!");
+        Button btn = new Button();
+        btn.setText("Say 'Hello World'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+            }
+        });
+        
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+    }
+}
+*/
 import java.awt.*;
 import javax.swing.*;
 
@@ -56,7 +89,7 @@ public class Board extends JComponent {
         int dHole = Math.round(Math.min(getWidth() / H_SPACES, getHeight() / V_SPACES * ROOT3));
 
         // draw entire component white
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         // draw holes
