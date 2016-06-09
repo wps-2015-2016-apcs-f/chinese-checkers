@@ -31,6 +31,7 @@
         <version>2.10.3</version>
         <configuration>
           <show>private</show>
+          <linksource>true</linksource>
           <nohelp>true</nohelp>
         </configuration>
       </plugin>
