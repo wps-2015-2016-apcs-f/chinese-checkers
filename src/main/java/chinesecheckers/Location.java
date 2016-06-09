@@ -23,8 +23,7 @@ public abstract class Location {
      * @param col col of this Location
      */
     public Location(int row, int col) {
-        this.row = row;
-        this.col = col;
+        move(row, col);
     }
 
     /**
@@ -42,11 +41,23 @@ public abstract class Location {
     public int getCol() { return col; }
 
     /**
-     * Returns true if <code>this</code> {@link Location} is empty.
+     * Move this {@link Location} to new row and column.
      *
-     * @return true if this Location is empty
+     * @param row new row for this Location
+     * @param col new column for this Location
      */
-    public abstract boolean isEmpty();
+    public void move(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
+    /**
+     * Returns true if <code>this</code> {@link Location} is a {@link Hole},
+     * false otherwise.
+     *
+     * @return true if this Location is a Hole, false otherwise
+     */
+    public abstract boolean isHole();
 
     /**
      * Returns true if <code>that</code> is non-null and row and col are equal. 

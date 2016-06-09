@@ -6,10 +6,29 @@
  */
 package chinesecheckers;
 
+import java.awt.*;
+
 /**
  * Marble class which IS-A {@link Location}.
  */
 public class Marble extends Location {
+    /** RED_FLAG: temporary until we have a default Color in Grid */
+    private static final Color NONE = Color.PINK;
+    /** Holds marble {@link Color}. */
+    private Color color = NONE;
+
+    /**
+     * Constructs a {@link Marble}.
+     *
+     * @param row row of this Marble
+     * @param col col of this Marble
+     * @param color color of this Marble
+     */
+    public Marble(int row, int col, Color color) {
+        super(row, col);
+        setColor(color);
+    }
+
     /**
      * Constructs a {@link Marble}.
      *
@@ -17,15 +36,23 @@ public class Marble extends Location {
      * @param col col of this Marble
      */
     public Marble(int row, int col) {
-        super(row, col);
+        this(row, col, NONE);
     }
 
     /**
-     * Returns true if <code>this</code> {@link Marble} is empty.
+     * Set the {@link Color} of this {@link Location}.
      *
-     * @return false
+     * @param color new color for this Marble
      */
-    public boolean isEmpty() {
+    public void setColor(Color color) { this.color = color; }
+
+    /**
+     * Returns true if <code>this</code> {@link Location} is a {@link Hole},
+     * false otherwise.
+     *
+     * @return true if this Location is a Hole, false otherwise
+     */
+    public boolean isHole() {
         return false;
     }
 

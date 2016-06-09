@@ -91,10 +91,10 @@ public class LocationTest {
         holes = new Location[] { h1, h2, h3, h4, };
         for (int i = 0; i < holes.length; i++)
             Assert.assertTrue("!(" + holes[i] + ").isEmpty().",
-                holes[i].isEmpty());
+                holes[i].isHole());
         marbles = new Location[] { m0, m5, m6, m7, m8 };
         for (int i = 0; i < marbles.length; i++)
             Assert.assertFalse("(" + marbles[i] + ").isEmpty().",
-                marbles[i].isEmpty());
+                marbles[i].isHole());
     }
 }

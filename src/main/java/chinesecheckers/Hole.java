@@ -21,11 +21,12 @@ public class Hole extends Location {
     }
 
     /**
-     * Returns true if <code>this</code> {@link Hole} is empty.
+     * Returns true if <code>this</code> {@link Location} is a {@link Hole},
+     * false otherwise.
      *
-     * @return true
+     * @return true if this Location is a Hole, false otherwise
      */
-    public boolean isEmpty() {
+    public boolean isHole() {
         return true;
     }
 
