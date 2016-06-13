@@ -10,6 +10,8 @@
 
 package chinesecheckers;
 
+import java.util.ArrayList;
+
 public class Strategy {
 //Fields
 	
@@ -22,9 +24,14 @@ public class Strategy {
 		return new Hole(x,y);
 	}
 
-	public int getDistance(){
+	//returns MoveSequence object with all possible moves, requires grid.isValidMove
+	public ArrayList<MoveSequence> allMoves(Marble m){
+		//Stub
+		ArrayList<MoveSequence> allPossible = new ArrayList<MoveSequence>();
 		
-		return 0;
+		
+		MoveSequence moves = new MoveSequence();
+		return allPossible;
 	}
 	
 	public void computerMove(){
