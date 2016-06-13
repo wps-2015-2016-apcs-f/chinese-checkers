@@ -10,6 +10,8 @@ import org.junit.*;
 
 /**
  * Unit test for {@link Location}s, including {@link Hole} and {@link Marble}.
+ * RED_FLAG: these tests do not test mutators
+ * RED_FLAG: these tests do not test Marble color
  */
 public class LocationTest {
 
