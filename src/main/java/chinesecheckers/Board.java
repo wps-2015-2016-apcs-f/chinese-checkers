@@ -3,42 +3,12 @@
  *
  * @author 2015-2016 APCS F-Block
  * @author David C. Petty <dpetty@winchesterps.org>
+ * @author Sharon Xiang
+ * @author Joy Zhang
+ * @author Ruoxi Zhang
  */
 package chinesecheckers;
-/*
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-public class Board extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-    }
-}
-*/
 import java.awt.*;
 import javax.swing.*;
 
@@ -113,16 +83,39 @@ public class Board extends JComponent {
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }
+}
+/*
+// Temporary code using JavaFX commented out...
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-    /**
-     * Board main method.
-     *
-     * @param args command-line arguments
-     */
-    public static void main(String args[]) {
-        JFrame mainFrame = new JFrame("Chinese Checkers");
-        mainFrame.getContentPane().add(new Board());
-        mainFrame.pack();
-        mainFrame.setVisible(true);
+public class Board extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Hello World!");
+        Button btn = new Button();
+        btn.setText("Say 'Hello World'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+            }
+        });
+        
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
     }
 }
+*/

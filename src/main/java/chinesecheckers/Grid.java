@@ -3,12 +3,14 @@
  *
  * @author 2015-2016 APCS F-Block
  * @author David C. Petty <dpetty@winchesterps.org>
+ * @author Emilia Lew
  */
 package chinesecheckers;
 
-import java.awt.*;
+import java.awt.Color;
+
 /**
- * Grid class mirrors the Chinese Checkers {@link Board}.
+ * Grid class mirrors the Chinese Checker {@link Board}.
  */
 public class Grid {
     /** Size of square grid. */
@@ -20,9 +22,9 @@ public class Grid {
     private static final Color B = Color.BLACK;
     private static final Color G = Color.GREEN;
     private static final Color L = Color.BLUE;
-    private static final Color R = Color.RED;
-    private static final Color H = Color.MAGENTA; //represent holes
-    private static final Color X = Color.PINK; // null spaces
+    private static final Color R = Color.RED; 
+    private static final Color H = Color.MAGENTA;   //represent holes
+    private static final Color X = Color.PINK;      // null spaces
 
     // A grid of colors.
     private static final Color colorGrid[][] = {
@@ -44,48 +46,47 @@ public class Grid {
                                       { X, X, X, X, G, G, X, X, X, X, X, X, X, X, X, X, X, },
                                         { X, X, X, X, G, X, X, X, X, X, X, X, X, X, X, X, X, },
     };
-    
+
     private Location[][] grid = new Location[SIZE][SIZE];
-    
+
     public Grid()
     {
-      assert colorGrid.length == SIZE;
-      for (int row = 0; row < SIZE; row++)
-        for (int col = 0; col < SIZE; col++)
-      {
-        assert colorGrid[row].length == SIZE;
-        if (colorGrid[row][col].equals(X))
-          grid[row][col] = null;
-        if (colorGrid[row][col].equals(H))
-          grid[row][col] = new Hole(row, col);
-        if (colorGrid[row][col].equals(W))
-          grid[row][col] = new Marble(row, col, W);
-        if (colorGrid[row][col].equals(G))
-          grid[row][col] = new Marble(row, col, G);
-        if (colorGrid[row][col].equals(B))
-          grid[row][col] = new Marble(row, col, B);
-        if (colorGrid[row][col].equals(L))
-          grid[row][col] = new Marble(row, col, L);
-        if (colorGrid[row][col].equals(R))
-          grid[row][col] = new Marble(row, col, R);
-        if (colorGrid[row][col].equals(Y))
-          grid[row][col] = new Marble(row, col, Y);
-      }
+        assert colorGrid.length == SIZE;
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+            assert colorGrid[row].length == SIZE;
+            if (colorGrid[row][col].equals(X))
+                grid[row][col] = null;
+            if (colorGrid[row][col].equals(H))
+                grid[row][col] = new Hole(row, col);
+            if (colorGrid[row][col].equals(W))
+                grid[row][col] = new Marble(row, col, W);
+            if (colorGrid[row][col].equals(G))
+                grid[row][col] = new Marble(row, col, G);
+            if (colorGrid[row][col].equals(B))
+                grid[row][col] = new Marble(row, col, B);
+            if (colorGrid[row][col].equals(L))
+                grid[row][col] = new Marble(row, col, L);
+            if (colorGrid[row][col].equals(R))
+                grid[row][col] = new Marble(row, col, R);
+            if (colorGrid[row][col].equals(Y))
+                grid[row][col] = new Marble(row, col, Y);
+            }
+        }
     }
-      
 
     public Location getLocation(int row, int col) {
         return grid[row][col];
     }
-    
-    public boolean isValidMove(Location marble, Location land)
-    {
-      return false;
-    }
-      
 
     public void set(Location location) {
+        grid[location.getRow()][location.getCol()] = location;
     }
+
+    public boolean isValidMove(Location marble, Location land) {
+        return false; // STUB
+    }
+
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
         return true; // STUB
     }
