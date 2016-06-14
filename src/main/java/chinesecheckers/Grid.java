@@ -83,7 +83,7 @@ public class Grid {
         grid[location.getRow()][location.getCol()] = location;
     }
 
-    public boolean isValidMove(Location marble, Location land) {
+    public static boolean isValidMove(Location marble, Location land) {
         return false; // STUB
     }
 

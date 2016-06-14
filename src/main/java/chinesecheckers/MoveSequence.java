@@ -14,10 +14,12 @@ public class MoveSequence {
 	
 //Fields
 	private ArrayList<Hole> moves;
-	
-//Constructors
+	private final Hole ENDPOINT;
+
+	//Constructors
 	public MoveSequence(){
 		moves = new ArrayList<Hole>();
+		ENDPOINT = new Hole(0,12);
 	}
 	
 //Methods
@@ -42,4 +44,7 @@ public class MoveSequence {
 			return moves.size() * 2;
 	}
 	
+	public int distanceFromEnd(Marble m){
+		return Math.max(Math.abs(m.getRow()-ENDPOINT.getRow()), Math.abs(m.getCol()-ENDPOINT.getCol()));
+	}
 }
