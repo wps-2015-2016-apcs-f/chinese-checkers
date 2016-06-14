@@ -6,21 +6,49 @@
  */
 package chinesecheckers;
 
+import java.awt.*;
+import javax.swing.*;
+
 /**
  * ChineseCheckers class.
  */
 public class ChineseCheckers {
 
-    /** Sample private field. */
-    private static int privateTest;
+    /** ChineseCheckers game {@link Window}. */
+    private static Board board;
+    /** ChineseCheckers game {@link Grid}. */
+    private static Grid grid;
 
     /**
-     * ChineseCheckers main method.
+     * Returns {@link Window} object for this ChineseCheckers game.
+     *
+     * @return Window object for this ChineseCheckers game
+     */
+    public static Board getBoard() { return board; }
+    /**
+     * Returns {@link Grid} object for this ChineseCheckers game.
+     *
+     * @return Grid object for this ChineseCheckers game
+     */
+    public static Grid getGrid() { return grid; }
+
+    /**
+     * ChineseCheckers Game main method.
      *
      * @param args command-line arguments
      */
     public static void main(String[] args) {
         System.out.println("# ChineseCheckers");
-        Board.main(null);
+        JFrame frame = new JFrame("ChineseCheckers");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = frame.getContentPane();
+
+        // Initialize static objects board and grid.
+        grid = new Grid();
+        board = new Board();
+
+        c.add(board);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
