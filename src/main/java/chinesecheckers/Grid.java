@@ -91,7 +91,7 @@ public class Grid {
 
     /**
      * Returns {@link Location} in this {@link Grid} <code>deltaRow</code> and 
-     * <code>deltaRow</code> away from <code>start</code>.
+     * <code>deltaCol</code> away from <code>start</code>.
      *
      * @param start starting Location
      * @param deltaRow row change from start
@@ -103,7 +103,7 @@ public class Grid {
             return null;
         int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
         assert grid[start.getRow()][start.getCol()] == start :
-            "grid[" + start.getRow() + "][" + start.getRow() + "] != (" + start + ")";
+            "(grid[" + start.getRow() + "][" + start.getRow() + "]) != (" + start + ")";
         if (row < 0 || row >= SIZE || col < 0 || col >= SIZE)
             return null;
         return grid[row][col];
