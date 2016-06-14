@@ -11,15 +11,20 @@ package chinesecheckers;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Container;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Board test class. So far, this simply creates a Chinese Checkers board.
  */
-public class Board extends JComponent {
+public class Board extends JPanel {
     // Magic numbers.
-    private static final int MIN_HOLE = 20;
-    private static final int H_SPACES = 27;
-    private static final int V_SPACES = 35;
+    private static final int DIAMETER = 20;
+    private static final int SPACE = 10;
+    private static final int DISTANCE = 30;
     private static final float ROOT3 = (float) Math.sqrt(3);
 
     // One-letter colors.
@@ -35,12 +40,12 @@ public class Board extends JComponent {
     public void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
-
-        int dHole = Math.round(Math.min(getWidth() / H_SPACES, getHeight() / V_SPACES * ROOT3));
+        
+        //int dHole = Math.round(Math.min(getWidth() / H_SPACES, getHeight() / V_SPACES * ROOT3));
 
         // draw entire component white
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, 500, 500);
 
         // draw holes
         for (int row = 0; row < Grid.SIZE; row++) 
@@ -52,9 +57,9 @@ public class Board extends JComponent {
         }
     }
 
-    public Dimension getPreferredSize() {
-        return new Dimension((H_SPACES + 1 - 1) * MIN_HOLE, Math.round(V_SPACES * MIN_HOLE / ROOT3));
-    }
+    //public Dimension getPreferredSize() {
+    //    return new Dimension((H_SPACES + 1 - 1) * MIN_HOLE, Math.round(V_SPACES * MIN_HOLE / ROOT3));
+    //}
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }
