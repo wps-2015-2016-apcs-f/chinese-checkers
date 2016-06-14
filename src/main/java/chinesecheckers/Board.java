@@ -56,10 +56,11 @@ public class Board extends JPanel {
             }
         }
     }
-
-    //public Dimension getPreferredSize() {
-    //    return new Dimension((H_SPACES + 1 - 1) * MIN_HOLE, Math.round(V_SPACES * MIN_HOLE / ROOT3));
-    //}
+    // RED_FLAG: this is not correct... just something to make the panel visible
+    public Dimension getPreferredSize() {
+        Grid grid = ChineseCheckers.getGrid();
+        return new Dimension((grid.SIZE) * DISTANCE, Math.round((grid.SIZE) * DISTANCE / ROOT3));
+    }
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }

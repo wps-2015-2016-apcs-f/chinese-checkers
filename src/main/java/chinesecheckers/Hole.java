@@ -21,6 +21,15 @@ public class Hole extends Location {
     }
 
     /**
+     * Constructs a copy of a {@link Hole}.
+     *
+     * @param that Hole to copy
+     */
+    public Hole(Hole that) {
+        super(that.getRow(), that.getCol());
+    }
+
+    /**
      * Returns true if <code>this</code> {@link Location} is a {@link Hole},
      * false otherwise.
      *

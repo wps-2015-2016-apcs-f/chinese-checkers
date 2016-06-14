@@ -40,6 +40,22 @@ public class Marble extends Location {
     }
 
     /**
+     * Constructs a copy of a {@link Marble}.
+     *
+     * @param that Marble to copy
+     */
+    public Marble(Marble that) {
+        this(that.getRow(), that.getCol(), that.color);
+    }
+
+    /**
+     * Returns color of this {@link Marble}.
+     *
+     * @return color of this Marble
+     */
+    public Color getColor() { return color; }
+
+    /**
      * Set the {@link Color} of this {@link Location}.
      *
      * @param color new color for this Marble

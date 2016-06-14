@@ -4,6 +4,7 @@
  * @author 2015-2016 APCS F-Block
  * @author David C. Petty <dpetty@winchesterps.org>
  * @author Emilia Lew
+ * @author Kallisti St. John
  */
 package chinesecheckers;
 
@@ -33,7 +34,7 @@ public class Grid {
             { X, X, X, X, X, X, X, X, X, X, R, R, R, X, X, X, X, },
               { X, X, X, X, X, X, X, X, X, R, R, R, R, X, X, X, X, },
                 { X, X, X, X, Y, Y, Y, Y, H, H, H, H, H, B, B, B, B, },
-                  { X, X, X, X, Y, Y, Y, H, H, H, H, H, H, B, B, B, X, },  
+                  { X, X, X, X, Y, Y, Y, H, H, H, H, H, H, B, B, B, X, },
                     { X, X, X, X, Y, Y, H, H, H, H, H, H, H, B, B, X, X, },
                       { X, X, X, X, Y, H, H, H, H, H, H, H, H, B, X, X, X, },
                         { X, X, X, X, H, H, H, H, H, H, H, H, H, X, X, X, X, },
@@ -78,10 +79,41 @@ public class Grid {
     public Location getLocation(int row, int col) {
         return grid[row][col];
     }
-
-    public void set(Location location) {
+    public Location getLocation(Location location) {
+        return getLocation(location.getRow(), location.getCol());
+    }
+    public void setLocation(int row, int col, Location location) {
         grid[location.getRow()][location.getCol()] = location;
     }
+    public void setLocation(Location location) {
+        setLocation(location.getRow(), location.getCol(), location);
+    }
+
+    /**
+     * Returns {@link Location} in this {@link Grid} <code>deltaRow</code> and 
+     * <code>deltaRow</code> away from <code>start</code>.
+     *
+     * @param start starting Location
+     * @param deltaRow row change from start
+     * @param deltaCol column change from start
+     * @return Location <code>deltaRow</code> and <code>deltaRow</code> from this
+     */
+    private Location atLocation(Location start, int deltaRow, int deltaCol) {
+        if (start == null)
+            return null;
+        int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
+        assert grid[start.getRow()][start.getCol()] == start :
+            "grid[" + start.getRow() + "][" + start.getRow() + "] != (" + start + ")";
+        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE)
+            return null;
+        return grid[row][col];
+    }
+    public Location atLeft(Location location) { return atLocation(location, 0, -1); }
+    public Location atAboveLeft(Location location) { return atLocation(location, -1, 0); }
+    public Location atAboveRight(Location location) { return atLocation(location, -1, +1); }
+    public Location atRight(Location location) { return atLocation(location, 0, +1); }
+    public Location atBelowRight(Location location) { return atLocation(location, +1, 0); }
+    public Location atBelowLeft(Location location) { return atLocation(location, +1, -1); }
 
     public static boolean isValidMove(Location marble, Location land) {
         return false; // STUB
