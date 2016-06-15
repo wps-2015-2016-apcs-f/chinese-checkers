@@ -108,8 +108,21 @@ public class Grid {
             return null;
         return grid[row][col];
     }
-    
-    public Location atLeft(Location location) { return atLocation(location, 0, -1); }
+
+    private boolean checkLocation(Location marble, Location hole, int deltaRow, int deltaCol) {
+        assert marble != null : "marble == null";
+        assert !marble.isHole() : "marble.isHole()";
+        assert hole != null : "land == null";
+        assert hole.isHole() : "!hole.isHole()";
+        Location oneAway = atLocation(marble, deltaRow, deltaCol);
+        Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
+        return hole.equals(oneAway)
+            || oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
+    }
+    public Location atLeft(Location location)
+    { return atLocation(location, 0, -1); }
+    public boolean checkLeft(Location start, Location land)
+    { return checkLocation(start, land, 0, -1); }
     
     public Location atAboveLeft(Location location) { return atLocation(location, -1, 0); }
     
@@ -121,8 +134,14 @@ public class Grid {
     
     public Location atBelowLeft(Location location) { return atLocation(location, +1, -1); }
 
-    public static boolean isValidMove(Location marble, Location land) {
-        return true; //STUB
+    public boolean isValidMove(Location marble, Location land) {
+        return checkLeft(marble, land)/*
+            || checkUpperUpperLeft(marble, land)
+            || checkUpperupperRight(marble, land)
+            || checkUpperLeft(marble, land)
+            || checkUpperLeft(marble, land)
+            || checkUpperLeft(marble, land)
+            || checkUpperLeft(marble, land)*/;
     }
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
