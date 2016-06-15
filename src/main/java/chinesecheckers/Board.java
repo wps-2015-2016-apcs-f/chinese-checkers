@@ -28,33 +28,68 @@ public class Board extends JPanel {
     private static final float ROOT3 = (float) Math.sqrt(3);
 
     // One-letter colors.
+    private static final Color BOARD_COLOR = Color.BLACK;
+    private static final Color HOLE_COLOR = Color.WHITE;   
     private static final Color W = Color.WHITE;
     private static final Color Y = Color.YELLOW;
-    private static final Color K = Color.BLACK;
+    private static final Color B = Color.BLACK;
     private static final Color G = Color.GREEN;
     private static final Color L = Color.BLUE;
-    private static final Color R = Color.RED;
-    private static final Color P = Color.PINK;
-    private static final Color X = Color.MAGENTA;
+    private static final Color R = Color.RED; 
         
     public void paintComponent(Graphics g) 
     {
-        super.paintComponent(g);
-        
-        //int dHole = Math.round(Math.min(getWidth() / H_SPACES, getHeight() / V_SPACES * ROOT3));
+        super.paintComponent(g);       
 
-        // draw entire component white
-        g.setColor(Color.BLUE);
-        g.fillRect(0, 0, 500, 500);
-
-        // draw holes
+        // draw board objects
         for (int row = 0; row < Grid.SIZE; row++) 
         {
             for (int col = 0; col < Grid.SIZE; col++) 
             {    
-                
+                if (ChineseCheckers.getGrid().getLocation(row, col) == null)
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(BOARD_COLOR);
+                }
+                else if (ChineseCheckers.getGrid().getLocation(row, col).isHole())
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(HOLE_COLOR);
+                }
+                else 
+                  //indent stuff so that its nested under else
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.RED);
+                }
+                if (ChineseCheckers.getGrid().getLocation(row, col).getColor().equals(L))
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.BLUE);
+                }  
+                if (ChineseCheckers.getGrid().getLocation(row, col).getColor().equals(G))
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.GREEN);
+                }  
+                if (ChineseCheckers.getGrid().getLocation(row, col).getColor().equals(Y))
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.YELLOW);
+                }  
+                if (ChineseCheckers.getGrid().getLocation(row, col).getColor().equals(B))
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.ORANGE);
+                }  
+                if (ChineseCheckers.getGrid().getLocation(row, col).getColor().equals(W))
+                {
+                  g.fillOval(5, 4, DIAMETER, DIAMETER);
+                  g.setColor(Color.PINK);
+                }  
             }
         }
+      
     }
     // RED_FLAG: this is not correct... just something to make the panel visible
     public Dimension getPreferredSize() {
