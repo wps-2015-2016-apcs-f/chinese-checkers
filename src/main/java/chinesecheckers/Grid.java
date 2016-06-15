@@ -119,20 +119,41 @@ public class Grid {
         return hole.equals(oneAway)
             || oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
     }
-    public Location atLeft(Location location)
+    public Location atLeft(Location location) 
     { return atLocation(location, 0, -1); }
-    public boolean checkLeft(Location start, Location land)
+    
+    public boolean checkLeft(Location start, Location land) 
     { return checkLocation(start, land, 0, -1); }
     
-    public Location atAboveLeft(Location location) { return atLocation(location, -1, 0); }
+    public Location atAboveLeft(Location location) 
+    { return atLocation(location, -1, 0); }
     
-    public Location atAboveRight(Location location) { return atLocation(location, -1, +1); }
+    public boolean checkAboveLeft(Location start, Location land)
+    { return checkLocation(start, land, -1, 0); }
     
-    public Location atRight(Location location) { return atLocation(location, 0, +1); }
+    public Location atAboveRight(Location location) 
+    { return atLocation(location, -1, +1); }
     
-    public Location atBelowRight(Location location) { return atLocation(location, +1, 0); }
+    public boolean checkAboveRight(Location start, Location land)
+    { return checkLocation(start, land, -1, +1); }
     
-    public Location atBelowLeft(Location location) { return atLocation(location, +1, -1); }
+    public Location atRight(Location location) 
+    { return atLocation(location, 0, +1); }
+    
+    public boolean checkRight(Location start, Location land)
+    { return checkLocation(start, land, 0, +1); }
+    
+    public Location atBelowRight(Location location) 
+    { return atLocation(location, +1, 0); }
+    
+    public boolean checkBelowRight(Location start, Location land)
+    { return checkLocation(start, land, +1, 0); }
+    
+    public Location atBelowLeft(Location location) 
+    { return atLocation(location, +1, -1); }
+    
+    public boolean checkBelowLeft(Location start, Location land)
+    { return checkLocation(start, land, +1, -1); }
 
     public boolean isValidMove(Location marble, Location land) {
         return checkLeft(marble, land)/*
