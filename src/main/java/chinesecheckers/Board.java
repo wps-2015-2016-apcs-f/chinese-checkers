@@ -48,44 +48,44 @@ public class Board extends JPanel {
             {    
                 if (ChineseCheckers.getGrid().getLocation(row, col) == null)
                 {
-                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                   g.setColor(BOARD_COLOR);
                 }
                 else if (ChineseCheckers.getGrid().getLocation(row, col).isHole())
                 {
-                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                   g.setColor(HOLE_COLOR);
                 }
                 else 
                 {
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(R))
                   {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.RED);
                   }
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(L))
                   {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.BLUE);
                   }  
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(G))
                   { 
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.GREEN);
                   }  
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(Y))
                   {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.YELLOW);
                   }  
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(B))
                   {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.ORANGE);
                   }  
                   if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(W))
                   {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((60.0 / ROOT3) + 60.0) - 60.0), DIAMETER, DIAMETER);
+                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
                     g.setColor(Color.PINK);
                   }
                }  
