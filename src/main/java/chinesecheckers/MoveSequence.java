@@ -44,7 +44,7 @@ public class MoveSequence {
 			return moves.size() * 2;
 	}
 	
-	public int distanceFromEnd(Marble m){
-		return Math.max(Math.abs(m.getRow()-ENDPOINT.getRow()), Math.abs(m.getCol()-ENDPOINT.getCol()));
+	public int distanceFromEnd(){
+		return Math.max(Math.abs(moves.get(moves.size()-1).getRow()-ENDPOINT.getRow()), Math.abs(moves.get(moves.size()-1).getCol()-ENDPOINT.getCol()));
 	}
 }
