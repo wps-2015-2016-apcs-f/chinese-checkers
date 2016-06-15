@@ -109,75 +109,20 @@ public class Grid {
         return grid[row][col];
     }
     
-    public Location atLeft(Location location) 
-    { 
-      Location left = atLocation(location, 0, -1);
-      if (left.isHole())
-        return left;
-      if (atLocation(left, 0, -1).isHole())
-        return atLocation(left, 0, -1);
-      return null;
-    }
+    public Location atLeft(Location location) { return atLocation(location, 0, -1); }
     
-    public Location atAboveLeft(Location location) 
-    { 
-      Location aboveLeft = atLocation(location, -1, 0);
-      if (aboveLeft.isHole())
-        return aboveLeft;
-      if (atLocation(aboveLeft, -1, 0).isHole())
-        return atLocation(aboveLeft, -1, 0);
-      return null;
-    }
+    public Location atAboveLeft(Location location) { return atLocation(location, -1, 0); }
     
-    public Location atAboveRight(Location location) 
-    { 
-      Location aboveRight = atLocation(location, -1, +1);
-      if (aboveRight.isHole())
-        return aboveRight;
-      if (atLocation(aboveRight, -1, +1).isHole())
-        return atLocation(aboveRight, -1, +1);
-      return null;
-    }
+    public Location atAboveRight(Location location) { return atLocation(location, -1, +1); }
     
-    public Location atRight(Location location) 
-    {
-      Location right = atLocation(location, 0, +1);
-      if (right.isHole())
-        return right;
-      if (atLocation(right, 0, +1).isHole())
-        return atLocation(right, 0, +1);
-      return null;
-    }
+    public Location atRight(Location location) { return atLocation(location, 0, +1); }
     
-    public Location atBelowRight(Location location) 
-    { 
-      Location belowRight = atLocation(location, +1, 0);
-      if (belowRight.isHole())
-        return belowRight;
-      if (atLocation(belowRight, +1, 0).isHole())
-        return atLocation(belowRight, 0, -1);
-      return null;
-    }
+    public Location atBelowRight(Location location) { return atLocation(location, +1, 0); }
     
-    public Location atBelowLeft(Location location) 
-    {
-      Location belowLeft = atLocation(location, +1, -1);
-      if (belowLeft.isHole())
-        return belowLeft;
-      if (atLocation(belowLeft, +1, -1).isHole())
-        return atLocation(belowLeft, +1, -1);
-      return null;
-    }
+    public Location atBelowLeft(Location location) { return atLocation(location, +1, -1); }
 
-    public static boolean isValidMove(Location marble, Location land) // ERROR
-      //cannot be referenced from a static context
-      //atLeft and other methods are not static
-    {
-        /*if (atLeft(marble) == land || atRight(marble) == land || 
-            atAboveLeft(marble) == land || atAboveRight(marble) == land ||
-            atBelowLeft(marble) == land || atBelowRight(marble) == land)
-          return true;*/
-        return false; // STUB
+    public static boolean isValidMove(Location marble, Location land) {
+        return true; //STUB
     }
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
