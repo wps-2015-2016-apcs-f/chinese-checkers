@@ -28,6 +28,10 @@ public class MoveSequence {
 		moves.add(h);
 	}
 	
+	public void removeLast(){
+		moves.remove(moves.size()-1);
+	}
+	
 	public int size(){
 		return moves.size();
 	}
