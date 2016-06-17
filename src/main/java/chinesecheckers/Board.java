@@ -24,8 +24,10 @@ public class Board extends JPanel {
     private static final float ROOT3 = (float) Math.sqrt(3);
 
     // One-letter colors.
-    private static final Color BOARD_COLOR = Color.LIGHT_GRAY;
-    private static final Color HOLE_COLOR = Color.WHITE;   
+    
+    private static final Color BOARD_COLOR = UIManager.getColor("Panel.background");
+    private static final Color HOLE_COLOR = Color.LIGHT_GRAY; 
+    
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
