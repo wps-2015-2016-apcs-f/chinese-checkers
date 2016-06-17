@@ -48,121 +48,255 @@ public class Grid {
                                         { X, X, X, X, G, X, X, X, X, X, X, X, X, X, X, X, X, },
     };
 
+    /** Holds square {@link Grid} mirrors the Chinese Checker {@link Board}. */
     private Location[][] grid = new Location[SIZE][SIZE];
 
+    /**
+     * Constructs a square {@link Grid} that mirrors the Chinese Checker {@link Board}.
+     */
     public Grid()
     {
         assert colorGrid.length == SIZE;
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
-            assert colorGrid[row].length == SIZE;
-            if (colorGrid[row][col].equals(X))
-                grid[row][col] = null;
-            if (colorGrid[row][col].equals(H))
-                grid[row][col] = new Hole(row, col);
-            if (colorGrid[row][col].equals(W))
-                grid[row][col] = new Marble(row, col, W);
-            if (colorGrid[row][col].equals(G))
-                grid[row][col] = new Marble(row, col, G);
-            if (colorGrid[row][col].equals(B))
-                grid[row][col] = new Marble(row, col, B);
-            if (colorGrid[row][col].equals(L))
-                grid[row][col] = new Marble(row, col, L);
-            if (colorGrid[row][col].equals(R))
-                grid[row][col] = new Marble(row, col, R);
-            if (colorGrid[row][col].equals(Y))
-                grid[row][col] = new Marble(row, col, Y);
+                assert colorGrid[row].length == SIZE;
+                if (colorGrid[row][col].equals(X))
+                    grid[row][col] = null;
+                if (colorGrid[row][col].equals(H))
+                    grid[row][col] = new Hole(row, col);
+                if (colorGrid[row][col].equals(W))
+                    grid[row][col] = new Marble(row, col, W);
+                if (colorGrid[row][col].equals(G))
+                    grid[row][col] = new Marble(row, col, G);
+                if (colorGrid[row][col].equals(B))
+                    grid[row][col] = new Marble(row, col, B);
+                if (colorGrid[row][col].equals(L))
+                    grid[row][col] = new Marble(row, col, L);
+                if (colorGrid[row][col].equals(R))
+                    grid[row][col] = new Marble(row, col, R);
+                if (colorGrid[row][col].equals(Y))
+                    grid[row][col] = new Marble(row, col, Y);
             }
         }
     }
 
+    /**
+     * Returns {@link Location} at <code>grid[row, col]</code>.
+     *
+     * @param row row of accessed grid Location
+     * @param col column of accessed grid Location
+     * @return Location at grid[row, col]
+     */
     public Location getLocation(int row, int col) {
         return grid[row][col];
     }
+    /**
+     * Returns <code>grid</code> {@link Location} corresponding to 
+     * <code>location</code>.
+     *
+     * @param location Location that provides grid coordinates 
+     * @return grid Location corresponding to location
+     */
     public Location getLocation(Location location) {
         return getLocation(location.getRow(), location.getCol());
     }
+    /**
+     * Sets <code>grid[row, col]</code> {@link Location} to <code>location</code>.
+     *
+     * @param row row of mutated grid Location
+     * @param col column of returned grid Location
+     * @param location new Location at grid[row, col]
+     */
     public void setLocation(int row, int col, Location location) {
-        grid[location.getRow()][location.getCol()] = location;
+        assert row == location.getRow() && col == location.getCol() :
+            "[" + row + "," + col + "] does not match " + location;
+        grid[row][col] = location;
     }
+    /**
+     * Sets <code>grid</code> {@link Location} corresponding to <code>location</code>
+     * to <code>location</code>.
+     *
+     * @param location new Location at location's grid coordinates
+     */
     public void setLocation(Location location) {
         setLocation(location.getRow(), location.getCol(), location);
     }
 
     /**
-     * Returns {@link Location} in this {@link Grid} <code>deltaRow</code> and 
-     * <code>deltaCol</code> away from <code>start</code>.
+     * Returns <code>grid</code> {@link Location} <code>deltaRow</code> and 
+     * <code>deltaCol</code> away from <code>start</code>, or <code>null</code>
+     * if <code>start</code> is <code>null</code> or new {@link Location} is
+     * outside <code>grid</code>.
      *
      * @param start starting Location
      * @param deltaRow row change from start
      * @param deltaCol column change from start
-     * @return Location <code>deltaRow</code> and <code>deltaRow</code> from this
+     * @return Location deltaRow and deltaCol from start
      */
     private Location atLocation(Location start, int deltaRow, int deltaCol) {
         if (start == null)
             return null;
-        int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
         assert grid[start.getRow()][start.getCol()] == start :
             "(grid[" + start.getRow() + "][" + start.getRow() + "]) != (" + start + ")";
+        int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
         if (row < 0 || row >= SIZE || col < 0 || col >= SIZE)
             return null;
         return grid[row][col];
     }
 
-    private boolean checkLocation(Location marble, Location hole, int deltaRow, int deltaCol) {
+    /**
+     * Returns <code>grid</code> {@link Location} left of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location left of location
+     */
+    public Location atLeft(Location location) 
+    { return atLocation(location, 0, -1); }
+    /**
+     * Returns <code>grid</code> {@link Location} above left of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location above left of location
+     */
+    public Location atAboveLeft(Location location) 
+    { return atLocation(location, -1, 0); }
+    /**
+     * Returns <code>grid</code> {@link Location} above right of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location above right of location
+     */
+    public Location atAboveRight(Location location) 
+    { return atLocation(location, -1, +1); }
+    /**
+     * Returns <code>grid</code> {@link Location} right of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location right of location
+     */
+    public Location atRight(Location location) 
+    { return atLocation(location, 0, +1); }
+    /**
+     * Returns <code>grid</code> {@link Location} below right of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location below right of location
+     */
+    public Location atBelowRight(Location location) 
+    { return atLocation(location, +1, 0); }
+    /**
+     * Returns <code>grid</code> {@link Location} below left of <code>location</code>.
+     *
+     * @param location starting Location
+     * @return Location below left of location
+     */
+    public Location atBelowLeft(Location location) 
+    { return atLocation(location, +1, -1); }
+
+    /**
+     * Returns <code>true</code> if move of {@link Location} from <code>marble</code>
+     * to <code>hole</code> is valid, <em>i.e.</em> <code>marble</code> is adjacent to
+     * <code>hole</code> or one marble away from <code>hole</code>.
+     * <dl>
+     *   <dt>Precondition:</dt>
+     *   <dd>- marble and hole are not null</dd>
+     *   <dd>- marble IS-A Marble and hole IS-A Hole</dd>
+     * </dl>
+     *
+     * @param marble Location to move from
+     * @param hole Location to move to
+     * @param deltaRow row change from start
+     * @param deltaCol column change from start
+     * @return true if move from marble to hole is valid, otherwise false
+     */
+    private boolean checkMove(Location marble, Location hole, int deltaRow, int deltaCol) {
         assert marble != null : "marble == null";
         assert !marble.isHole() : "marble.isHole()";
-        assert hole != null : "land == null";
+        assert hole != null : "hole == null";
         assert hole.isHole() : "!hole.isHole()";
         Location oneAway = atLocation(marble, deltaRow, deltaCol);
         Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
         return hole.equals(oneAway)
             || oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
     }
-    public Location atLeft(Location location) 
-    { return atLocation(location, 0, -1); }
-    
-    public boolean checkLeft(Location start, Location land) 
-    { return checkLocation(start, land, 0, -1); }
-    
-    public Location atAboveLeft(Location location) 
-    { return atLocation(location, -1, 0); }
-    
-    public boolean checkAboveLeft(Location start, Location land)
-    { return checkLocation(start, land, -1, 0); }
-    
-    public Location atAboveRight(Location location) 
-    { return atLocation(location, -1, +1); }
-    
-    public boolean checkAboveRight(Location start, Location land)
-    { return checkLocation(start, land, -1, +1); }
-    
-    public Location atRight(Location location) 
-    { return atLocation(location, 0, +1); }
-    
-    public boolean checkRight(Location start, Location land)
-    { return checkLocation(start, land, 0, +1); }
-    
-    public Location atBelowRight(Location location) 
-    { return atLocation(location, +1, 0); }
-    
-    public boolean checkBelowRight(Location start, Location land)
-    { return checkLocation(start, land, +1, 0); }
-    
-    public Location atBelowLeft(Location location) 
-    { return atLocation(location, +1, -1); }
-    
-    public boolean checkBelowLeft(Location start, Location land)
-    { return checkLocation(start, land, +1, -1); }
 
-    public boolean isValidMove(Location marble, Location land) {
-        return checkLeft(marble, land)/*
-            || checkUpperUpperLeft(marble, land)
-            || checkUpperupperRight(marble, land)
-            || checkUpperLeft(marble, land)
-            || checkUpperLeft(marble, land)
-            || checkUpperLeft(marble, land)
-            || checkUpperLeft(marble, land)*/;
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to left
+     */
+    public boolean checkLeft(Location start, Location land) 
+    { return checkMove(start, land, 0, -1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to above left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to above left
+     */
+    public boolean checkAboveLeft(Location start, Location land)
+    { return checkMove(start, land, -1, 0); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to above right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to above right
+     */
+    public boolean checkAboveRight(Location start, Location land)
+    { return checkMove(start, land, -1, +1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to right
+     */
+    public boolean checkRight(Location start, Location land)
+    { return checkMove(start, land, 0, +1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to below right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to below right
+     */
+    public boolean checkBelowRight(Location start, Location land)
+    { return checkMove(start, land, +1, 0); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move to below left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move to below left
+     */
+    public boolean checkBelowLeft(Location start, Location land)
+    { return checkMove(start, land, +1, -1); }
+
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move
+     */
+    public boolean isValidMove(Location start, Location land) {
+        // RED_FLAG: isValidMove requires start, land to be: marble, hole.
+        return checkLeft(start, land)
+            || checkAboveLeft(start, land)
+            || checkAboveRight(start, land)
+            || checkRight(start, land)
+            || checkBelowRight(start, land)
+            || checkBelowLeft(start, land);
     }
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
