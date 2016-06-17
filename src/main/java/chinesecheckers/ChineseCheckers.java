@@ -50,5 +50,6 @@ public class ChineseCheckers {
         c.add(board);
         frame.pack();
         frame.setVisible(true);
+        System.out.print(grid);
     }
 }

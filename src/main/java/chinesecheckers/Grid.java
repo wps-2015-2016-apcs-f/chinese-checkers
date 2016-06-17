@@ -21,32 +21,35 @@ public class Grid {
     // One-letter colors.
     private static final Color W = Color.WHITE;
     private static final Color Y = Color.YELLOW;
-    private static final Color B = Color.BLACK;
+    private static final Color K = Color.BLACK;
     private static final Color G = Color.GREEN;
     private static final Color L = Color.BLUE;
     private static final Color R = Color.RED; 
     private static final Color H = Color.MAGENTA;   //represent holes
     private static final Color X = Color.PINK;      // null spaces
 
+    private static final Color[] colors = { W, Y, K, G, L, R, };
+    private static final String colorChars = "?WYKGLR";
+    
     // A grid of colors.
     private static final Color colorGrid[][] = {
         { X, X, X, X, X, X, X, X, X, X, X, X, R, X, X, X, X, },
           { X, X, X, X, X, X, X, X, X, X, X, R, R, X, X, X, X, },
             { X, X, X, X, X, X, X, X, X, X, R, R, R, X, X, X, X, },
               { X, X, X, X, X, X, X, X, X, R, R, R, R, X, X, X, X, },
-                { X, X, X, X, Y, Y, Y, Y, H, H, H, H, H, B, B, B, B, },
-                  { X, X, X, X, Y, Y, Y, H, H, H, H, H, H, B, B, B, X, },
-                    { X, X, X, X, Y, Y, H, H, H, H, H, H, H, B, B, X, X, },
-                      { X, X, X, X, Y, H, H, H, H, H, H, H, H, B, X, X, X, },
-                        { X, X, X, X, H, H, H, H, H, H, H, H, H, X, X, X, X, },
-                          { X, X, X, W, H, H, H, H, H, H, H, H, L, X, X, X, X, },
-                            { X, X, W, W, H, H, H, H, H, H, H, L, L, X, X, X, X, },
-                              { X, W, W, W, H, H, H, H, H, H, L, L, L, X, X, X, X, },
-                                { W, W, W, W, H, H, H, H, H, L, L, L, L, X, X, X, X, },
-                                  { X, X, X, X, G, G, G, G, X, X, X, X, X, X, X, X, X, },
-                                    { X, X, X, X, G, G, G, X, X, X, X, X, X, X, X, X, X, },
-                                      { X, X, X, X, G, G, X, X, X, X, X, X, X, X, X, X, X, },
-                                        { X, X, X, X, G, X, X, X, X, X, X, X, X, X, X, X, X, },
+                { X, X, X, X, Y, Y, Y, Y, H, H, H, H, H, K, K, K, K, },
+                  { X, X, X, X, Y, Y, Y, H, H, H, H, H, H, K, K, K, X, },
+                     { X, X, X, X, Y, Y, H, H, H, H, H, H, H, K, K, X, X, },
+                       { X, X, X, X, Y, H, H, H, H, H, H, H, H, K, X, X, X, },
+                         { X, X, X, X, H, H, H, H, H, H, H, H, H, X, X, X, X, },
+                           { X, X, X, W, H, H, H, H, H, H, H, H, L, X, X, X, X, },
+                             { X, X, W, W, H, H, H, H, H, H, H, L, L, X, X, X, X, },
+                               { X, W, W, W, H, H, H, H, H, H, L, L, L, X, X, X, X, },
+                                 { W, W, W, W, H, H, H, H, H, L, L, L, L, X, X, X, X, },
+                                   { X, X, X, X, G, G, G, G, X, X, X, X, X, X, X, X, X, },
+                                     { X, X, X, X, G, G, G, X, X, X, X, X, X, X, X, X, X, },
+                                       { X, X, X, X, G, G, X, X, X, X, X, X, X, X, X, X, X, },
+                                         { X, X, X, X, G, X, X, X, X, X, X, X, X, X, X, X, X, },
     };
 
     /** Holds square {@link Grid} mirrors the Chinese Checker {@link Board}. */
@@ -69,8 +72,8 @@ public class Grid {
                     grid[row][col] = new Marble(row, col, W);
                 if (colorGrid[row][col].equals(G))
                     grid[row][col] = new Marble(row, col, G);
-                if (colorGrid[row][col].equals(B))
-                    grid[row][col] = new Marble(row, col, B);
+                if (colorGrid[row][col].equals(K))
+                    grid[row][col] = new Marble(row, col, K);
                 if (colorGrid[row][col].equals(L))
                     grid[row][col] = new Marble(row, col, L);
                 if (colorGrid[row][col].equals(R))
@@ -111,7 +114,7 @@ public class Grid {
     public void setLocation(int row, int col, Location location) {
         assert row == location.getRow() && col == location.getCol() :
             "[" + row + "," + col + "] does not match " + location;
-        grid[row][col] = location;
+            grid[row][col] = location;
     }
     /**
      * Sets <code>grid</code> {@link Location} corresponding to <code>location</code>
@@ -139,10 +142,10 @@ public class Grid {
             return null;
         assert grid[start.getRow()][start.getCol()] == start :
             "(grid[" + start.getRow() + "][" + start.getRow() + "]) != (" + start + ")";
-        int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
-        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE)
-            return null;
-        return grid[row][col];
+            int row = start.getRow() + deltaRow, col = start.getCol() + deltaCol;
+            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE)
+                return null;
+            return grid[row][col];
     }
 
     /**
@@ -212,7 +215,7 @@ public class Grid {
      */
     private boolean checkMove(Location marble, Location hole, int deltaRow, int deltaCol) {
         if  (marble == null || marble.isHole() || hole == null || !hole.isHole())
-         return false;
+            return false;
         Location oneAway = atLocation(marble, deltaRow, deltaCol);
         Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
         return hole.equals(oneAway)
@@ -296,46 +299,66 @@ public class Grid {
             || checkBelowRight(start, land)
             || checkBelowLeft(start, land);
     }
-    
+
     public List<Location> getAllMoves(Location start) {
-     ArrayList<Location> validMoves = new ArrayList<Location>();
-     if (start.isHole() || start == null)
-      return validMoves;
-     if (checkRight(start, atRight(start)))
-      validMoves.add(atRight(start));
-     if (checkLeft(start, atLeft(start)))
-      validMoves.add(atLeft(start));
-     if (checkAboveRight(start, atAboveRight(start)))
-      validMoves.add(atAboveRight(start));
-     if (checkAboveLeft(start, atAboveLeft(start)))
-      validMoves.add(atAboveLeft(start));
-     if (checkBelowRight(start, atBelowRight(start)))
-      validMoves.add(atBelowRight(start));
-     if (checkBelowLeft(start, atBelowLeft(start)))
-      validMoves.add(atBelowLeft(start));
-     if (atRight(start) != null && !atRight(start).isHole())
-      if (atRight(atRight(start)) !=null && atRight(atRight(start)).isHole())
-       validMoves.add(atRight(atRight(start)));
-     if (atLeft(start) != null && !atLeft(start).isHole())
-      if (atLeft(atLeft(start)) !=null && atLeft(atLeft(start)).isHole())
-       validMoves.add(atLeft(atLeft(start)));
-     if (atAboveRight(start) != null && !atAboveRight(start).isHole())
-      if (atAboveRight(atAboveRight(start)) !=null && atAboveRight(atAboveRight(start)).isHole())
-       validMoves.add(atAboveRight(atAboveRight(start)));
-     if (atAboveLeft(start) != null && !atAboveLeft(start).isHole())
-      if (atAboveLeft(atAboveLeft(start)) !=null && atAboveLeft(atAboveLeft(start)).isHole())
-       validMoves.add(atAboveLeft(atAboveLeft(start)));
-     if (atBelowRight(start) != null && !atBelowRight(start).isHole())
-      if (atBelowRight(atBelowRight(start)) !=null && atBelowRight(atBelowRight(start)).isHole())
-       validMoves.add(atBelowRight(atBelowRight(start)));
-     if (atBelowLeft(start) != null && !atBelowLeft(start).isHole())
-      if (atBelowLeft(atBelowLeft(start)) !=null && atBelowLeft(atBelowLeft(start)).isHole())
-       validMoves.add(atBelowLeft(atBelowLeft(start)));
-      
-     return validMoves;
+        ArrayList<Location> validMoves = new ArrayList<Location>();
+        if (start.isHole() || start == null)
+            return validMoves;
+        if (checkRight(start, atRight(start)))
+            validMoves.add(atRight(start));
+        if (checkLeft(start, atLeft(start)))
+            validMoves.add(atLeft(start));
+        if (checkAboveRight(start, atAboveRight(start)))
+            validMoves.add(atAboveRight(start));
+        if (checkAboveLeft(start, atAboveLeft(start)))
+            validMoves.add(atAboveLeft(start));
+        if (checkBelowRight(start, atBelowRight(start)))
+            validMoves.add(atBelowRight(start));
+        if (checkBelowLeft(start, atBelowLeft(start)))
+            validMoves.add(atBelowLeft(start));
+        if (atRight(start) != null && !atRight(start).isHole())
+            if (atRight(atRight(start)) !=null && atRight(atRight(start)).isHole())
+            validMoves.add(atRight(atRight(start)));
+        if (atLeft(start) != null && !atLeft(start).isHole())
+            if (atLeft(atLeft(start)) !=null && atLeft(atLeft(start)).isHole())
+            validMoves.add(atLeft(atLeft(start)));
+        if (atAboveRight(start) != null && !atAboveRight(start).isHole())
+            if (atAboveRight(atAboveRight(start)) !=null && atAboveRight(atAboveRight(start)).isHole())
+            validMoves.add(atAboveRight(atAboveRight(start)));
+        if (atAboveLeft(start) != null && !atAboveLeft(start).isHole())
+            if (atAboveLeft(atAboveLeft(start)) !=null && atAboveLeft(atAboveLeft(start)).isHole())
+            validMoves.add(atAboveLeft(atAboveLeft(start)));
+        if (atBelowRight(start) != null && !atBelowRight(start).isHole())
+            if (atBelowRight(atBelowRight(start)) !=null && atBelowRight(atBelowRight(start)).isHole())
+            validMoves.add(atBelowRight(atBelowRight(start)));
+        if (atBelowLeft(start) != null && !atBelowLeft(start).isHole())
+            if (atBelowLeft(atBelowLeft(start)) !=null && atBelowLeft(atBelowLeft(start)).isHole())
+            validMoves.add(atBelowLeft(atBelowLeft(start)));
+        
+        return validMoves;
     }
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
         return true; // STUB
+    }
+
+    private char getColorChar(Color color) {
+        return colorChars.charAt(Arrays.asList(colors).indexOf(color) + 1);
+    }
+    public String toString() {
+        StringBuilder sb = new StringBuilder("{\n");
+        StringBuilder indent = new StringBuilder(" ");
+        for (int row = 0; row < grid.length; row++) {
+            sb.append(indent).append("{ ");
+            for (int col = 0; col < grid[row].length; col++) {
+                if (grid[row][col] == null) sb.append("X");
+                else if (grid[row][col].isHole()) sb.append("H");
+                else sb.append(getColorChar(((Marble) grid[row][col]).getColor()));
+                sb.append(",");
+            }
+            sb.append("},\n");
+            indent.append(" ");
+        }
+        return sb.append("}").toString();
     }
 }
