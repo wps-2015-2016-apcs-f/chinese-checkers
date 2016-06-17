@@ -22,13 +22,13 @@ import javax.swing.JPanel;
  */
 public class Board extends JPanel {
     // Magic numbers.
-    private static final int DIAMETER = 20;
-    private static final int SPACE = 10;
-    private static final int DISTANCE = 30;
+    private static final int DIAMETER = 20; // diameter of circle
+    private static final int SPACE = 10; // empty space between two circles
+    private static final int DISTANCE = 30; // distance between the centers of two adjacent circles
     private static final float ROOT3 = (float) Math.sqrt(3);
 
     // One-letter colors.
-    private static final Color BOARD_COLOR = Color.BLACK;
+    private static final Color BOARD_COLOR = Color.LIGHT_GRAY;
     private static final Color HOLE_COLOR = Color.WHITE;   
     private static final Color W = Color.WHITE;
     private static final Color Y = Color.YELLOW;
