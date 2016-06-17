@@ -15,8 +15,27 @@ import java.awt.Color;
 import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.event.*;
 
-public class Mouse
+public class Mouse extends JPanel implements MouseListener
 {
+  public void mouseClicked(MouseEvent e)
+  {
+  }
   
+  public void mouseEntered(MouseEvent e)
+  {
+  }
+  
+  public void mouseExited(MouseEvent e)
+  {
+  }
+  
+  public void mousePressed(MouseEvent e)
+  {
+  }
+  
+  public void  mouseReleased(MouseEvent e)
+  {
+  }
 }
