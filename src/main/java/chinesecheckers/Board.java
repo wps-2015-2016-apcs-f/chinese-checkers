@@ -18,41 +18,64 @@ import javax.swing.*;
 public class Board extends JPanel {
     // Magic numbers.
     private static final int DIAMETER = 20;         // Diameter of circle
-    private static final int SPACE = 10;            // Empty space between two circles
     private static final int DISTANCE = 30;         // Distance between the centers of two adjacent circles
-    private static final int BORDER = DISTANCE / 2; // Distance between the centers of two adjacent circles
+    private static final int BORDER = DISTANCE / 2; // Size of border
     private static final float ROOT3 = (float) Math.sqrt(3);
 
-    // One-letter colors.
-    
     private static final Color BOARD_COLOR = UIManager.getColor("Panel.background");
     private static final Color HOLE_COLOR = Color.LIGHT_GRAY; 
-    
+
+    /** Holds last point of mouse movement. */
+    private Point mouse = null;
+    public void setPoint(Point point) { mouse = point; }
+
+    private Point getCorner(int row, int col) {
+        return new Point((int) (col * DISTANCE + row * DISTANCE / 2f),
+                         (int) (row * DISTANCE * ROOT3 / 2f));
+    }
+    private boolean isWithin(Point point, Point corner) {
+/*
+        // Determine whether point is within a radius of center of location 
+        // determined by corner.
+        double deltaX = corner.getX() + DIAMETER / 2 - point.getX();
+        double deltaY = corner.getY() + DIAMETER / 2 - point.getY();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY) < DIAMETER / 2;
+*/
+        // Determine whether point is within location rectangle determined by corner.
+        return point.getX() >= corner.getX() && point.getX() <= corner.getX() + DIAMETER
+            && point.getY() >= corner.getY() && point.getY() <= corner.getY() + DIAMETER;
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
-
         // Draw board objects.
         for (int row = 0; row < Grid.SIZE; row++) {
             for (int col = 0; col < Grid.SIZE; col++) {
+                // Get grid location and corner point.
                 Location location = ChineseCheckers.getGrid().getLocation(row, col);
+                Point corner = getCorner(row, col);
+                // Set board color.
                 if (location == null)
                     g.setColor(BOARD_COLOR);
                 else if (location.isHole())
                     g.setColor(HOLE_COLOR);
                 else g.setColor(((Marble) location).getColor());
-                int xPosition = Math.round(col * DISTANCE + row * DISTANCE / 2f);
-                int yPosition = Math.round(row * DISTANCE * 3 / 2f / ROOT3);
-                g.fillOval(xPosition + BORDER, yPosition + BORDER, DIAMETER, DIAMETER);
+                // Draw marble or hole.
+                g.fillOval((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                // Highlight location under mouse.
+                if (location != null && mouse != null && isWithin(mouse, corner)) {
+                    g.setColor(Color.ORANGE);
+                    g.fillRect((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                }
             }
         }
     }
 
     // RED_FLAG: this is not correct... need a better notion of the total board size
     public Dimension getPreferredSize() {
-        Grid grid = ChineseCheckers.getGrid();
-        int width = Math.round((grid.SIZE) * DISTANCE * 3 / 2f);
-        int height = Math.round((grid.SIZE + 1) * DISTANCE * 3 / 2f / ROOT3);
+        Point corner = getCorner(Grid.SIZE - 1, Grid.SIZE - 1);
+        int width = (int) corner.getX() + DIAMETER;
+        int height = (int) corner.getY() + DIAMETER;
         return new Dimension(width, height);
     }
     public Dimension getMinimumSize() {

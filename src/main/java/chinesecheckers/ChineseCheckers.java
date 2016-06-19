@@ -46,6 +46,8 @@ public class ChineseCheckers {
         // Initialize static objects board and grid.
         grid = new Grid();
         board = new Board();
+        board.addMouseListener(new Mouse());
+        board.addMouseMotionListener(new Mouse());
 
         c.add(board);
         frame.pack();
