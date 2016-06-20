@@ -11,92 +11,71 @@ package chinesecheckers;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Container;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * Board test class. So far, this simply creates a Chinese Checkers board.
  */
 public class Board extends JPanel {
     // Magic numbers.
-    private static final int DIAMETER = 20; // Diameter of circle
-    private static final int SPACE = 10; // Empty space between two circles
-    private static final int DISTANCE = 30; // Distance between the centers of two adjacent circles
+    private static final int DIAMETER = 20;         // Diameter of circle
+    private static final int DISTANCE = 30;         // Distance between the centers of two adjacent circles
+    private static final int BORDER = DISTANCE / 2; // Size of border
     private static final float ROOT3 = (float) Math.sqrt(3);
 
-    // One-letter colors.
-    private static final Color BOARD_COLOR = Color.LIGHT_GRAY;
-    private static final Color HOLE_COLOR = Color.WHITE;   
-    private static final Color W = Color.WHITE;
-    private static final Color Y = Color.YELLOW;
-    private static final Color B = Color.BLACK;
-    private static final Color G = Color.GREEN;
-    private static final Color L = Color.BLUE;
-    private static final Color R = Color.RED; 
-        
-    public void paintComponent(Graphics g) 
-    {
-        super.paintComponent(g);       
+    private static final Color BOARD_COLOR = UIManager.getColor("Panel.background");
+    private static final Color HOLE_COLOR = Color.LIGHT_GRAY; 
 
-        // draw board objects
-        for (int row = 0; row < Grid.SIZE; row++) 
-        {
-            for (int col = 0; col < Grid.SIZE; col++) 
-            {    
-                if (ChineseCheckers.getGrid().getLocation(row, col) == null)
-                {
-                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                  g.setColor(BOARD_COLOR);
-                }
-                else if (ChineseCheckers.getGrid().getLocation(row, col).isHole())
-                {
-                  g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                  g.setColor(HOLE_COLOR);
-                }
-                else 
-                {
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(R))
-                  {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                    g.setColor(Color.RED);
-                  }
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(L))
-                  {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                    g.setColor(Color.BLUE);
-                  }  
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(G))
-                  { 
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                    g.setColor(Color.GREEN);
-                  }  
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(Y))
-                  {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                    g.setColor(Color.YELLOW);
-                  }  
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(B))
-                  {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
+    /** Holds last point of mouse movement. Set by {@link Mouse}. */
+    private Point mouse = null;
+    public void setPoint(Point point) { mouse = point; }
+
+    private Point getCorner(int row, int col) {
+        return new Point((int) (col * DISTANCE + row * DISTANCE / 2f),
+                         (int) (row * DISTANCE * ROOT3 / 2f));
+    }
+    private boolean isWithin(Point point, Point corner) {
+/*
+        // Determine whether point is within a radius of center of location 
+        // determined by corner.
+        double deltaX = corner.getX() + DIAMETER / 2 - point.getX();
+        double deltaY = corner.getY() + DIAMETER / 2 - point.getY();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY) < DIAMETER / 2;
+*/
+        // Determine whether point is within location rectangle determined by corner.
+        return point.getX() >= corner.getX() && point.getX() <= corner.getX() + DIAMETER
+            && point.getY() >= corner.getY() && point.getY() <= corner.getY() + DIAMETER;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Draw board objects.
+        for (int row = 0; row < Grid.SIZE; row++) {
+            for (int col = 0; col < Grid.SIZE; col++) {
+                // Get grid location and corner point.
+                Location location = ChineseCheckers.getGrid().getLocation(row, col);
+                Point corner = getCorner(row, col);
+                // Set board color.
+                if (location == null)
+                    g.setColor(BOARD_COLOR);
+                else if (location.isHole())
+                    g.setColor(HOLE_COLOR);
+                else g.setColor(((Marble) location).getColor());
+                // Draw marble or hole.
+                g.fillOval((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                // Highlight location under mouse.
+                if (location != null && mouse != null && isWithin(mouse, corner)) {
                     g.setColor(Color.ORANGE);
-                  }  
-                  if (((Marble)ChineseCheckers.getGrid().getLocation(row, col)).getColor().equals(W))
-                  {
-                    g.fillOval((int)(((col + 1.0) * 30.0 - 15.0) + 15.0 * row), (int)((row + 1.0) * ((30.0 / ROOT3) + (15.0 / ROOT3)) - (15.0 / ROOT3)), DIAMETER, DIAMETER);
-                    g.setColor(Color.PINK);
-                  }
-               }  
+                    g.fillRect((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                }
             }
         }
-      
     }
-    // RED_FLAG: this is not correct... just something to make the panel visible
+
     public Dimension getPreferredSize() {
-        Grid grid = ChineseCheckers.getGrid();
-        return new Dimension((grid.SIZE) * DISTANCE, Math.round((grid.SIZE) * DISTANCE / ROOT3));
+        Point corner = getCorner(Grid.SIZE - 1, Grid.SIZE - 1);
+        int width = (int) corner.getX() + DIAMETER;
+        int height = (int) corner.getY() + DIAMETER;
+        return new Dimension(width, height);
     }
     public Dimension getMinimumSize() {
         return getPreferredSize();
