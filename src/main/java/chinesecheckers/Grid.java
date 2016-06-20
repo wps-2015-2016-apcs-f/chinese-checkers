@@ -58,23 +58,6 @@ public class Grid {
     /**
      * Constructs a square {@link Grid} that mirrors the Chinese Checker {@link Board}.
      */
-    
-    public List<Location> allMarbles(Color color)
-    {
-      ArrayList<Location> allMarbles = new ArrayList<Location>();
-      for (int row = 0; row <= SIZE; row++)
-        for (int col = 0; col <= SIZE; col++)
-      {
-        if (grid[row][col] != null && !grid[row][col].isHole())
-        {
-          Marble temp = (Marble)grid[row][col];
-          if (temp.getColor().equals(color))
-          allMarbles.add(grid[row][col]);
-        }
-        }
-      return allMarbles;
-      }
-    
     public Grid()
     {
         assert colorGrid.length == SIZE;
@@ -100,13 +83,16 @@ public class Grid {
             }
         }
     }
-    
-    public Grid(Grid that)
-    {
-        for (int row = 0; row < SIZE; row++) {
+
+    /**
+     * {@link Grid} copy constructor.
+     *
+     * @param that Grid to copy
+     */
+    public Grid(Grid that) {
+        for (int row = 0; row < SIZE; row++)
             for (int col = 0; col < SIZE; col++)
                 that.grid[row][col] = this.grid[row][col];
-        }
     }
 
     /**
@@ -224,13 +210,9 @@ public class Grid {
 
     /**
      * Returns <code>true</code> if move of {@link Location} from <code>marble</code>
-     * to <code>hole</code> is valid, <em>i.e.</em> <code>marble</code> is adjacent to
-     * <code>hole</code> or one marble away from <code>hole</code>.
-     * <dl>
-     *   <dt>Precondition:</dt>
-     *   <dd>- marble and hole are not null</dd>
-     *   <dd>- marble IS-A Marble and hole IS-A Hole</dd>
-     * </dl>
+     * to <code>hole</code> is valid. That is, <code>marble</code>, a {@link Marble},
+     * is once <code>deltaRow</code> and once <code>deltaCol</code> away from 
+     * <code>hole</code>, a {@link Hole}.
      *
      * @param marble Location to move from
      * @param hole Location to move to
@@ -241,10 +223,8 @@ public class Grid {
     private boolean checkMove(Location marble, Location hole, int deltaRow, int deltaCol) {
         if  (marble == null || marble.isHole() || hole == null || !hole.isHole())
             return false;
-        Location oneAway = atLocation(marble, deltaRow, deltaCol);
-        Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
-        return hole.equals(oneAway)
-            || oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
+        Location oneDeltaAway = atLocation(marble, deltaRow, deltaCol);
+        return hole.equals(oneDeltaAway);
     }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -254,7 +234,7 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to left
      */
-    public boolean checkLeft(Location start, Location land) 
+    public boolean checkMoveLeft(Location start, Location land)
     { return checkMove(start, land, 0, -1); }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -264,7 +244,7 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to above left
      */
-    public boolean checkAboveLeft(Location start, Location land)
+    public boolean checkMoveAboveLeft(Location start, Location land)
     { return checkMove(start, land, -1, 0); }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -274,7 +254,7 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to above right
      */
-    public boolean checkAboveRight(Location start, Location land)
+    public boolean checkMoveAboveRight(Location start, Location land)
     { return checkMove(start, land, -1, +1); }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -284,7 +264,7 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to right
      */
-    public boolean checkRight(Location start, Location land)
+    public boolean checkMoveRight(Location start, Location land)
     { return checkMove(start, land, 0, +1); }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -294,7 +274,7 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to below right
      */
-    public boolean checkBelowRight(Location start, Location land)
+    public boolean checkMoveBelowRight(Location start, Location land)
     { return checkMove(start, land, +1, 0); }
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
@@ -304,70 +284,187 @@ public class Grid {
      * @param land landing Location
      * @return true if start to land is a valid move to below left
      */
-    public boolean checkBelowLeft(Location start, Location land)
+    public boolean checkMoveBelowLeft(Location start, Location land)
     { return checkMove(start, land, +1, -1); }
 
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
-     * is a valid move.
+     * is a valid move. That is, <code>start</code>, a {@link Marble}, is
+     * adjacent to <code>land</code>, a {@link Hole}.
      *
      * @param start starting Location
      * @param land landing Location
      * @return true if start to land is a valid move
      */
     public boolean isValidMove(Location start, Location land) {
-        // RED_FLAG: isValidMove requires start, land to be: marble, hole.
-        return checkLeft(start, land)
-            || checkAboveLeft(start, land)
-            || checkAboveRight(start, land)
-            || checkRight(start, land)
-            || checkBelowRight(start, land)
-            || checkBelowLeft(start, land);
+        return checkMoveLeft(start, land)
+            || checkMoveAboveLeft(start, land)
+            || checkMoveAboveRight(start, land)
+            || checkMoveRight(start, land)
+            || checkMoveBelowRight(start, land)
+            || checkMoveBelowLeft(start, land);
+    }
+
+    /**
+     * Returns <code>true</code> if jump of {@link Location} from <code>marble</code>
+     * to <code>hole</code> is valid. That is, <code>marble</code>, a {@link Marble},
+     * is twice <code>deltaRow</code> and twice <code>deltaCol</code> away from 
+     * <code>hole</code>, a {@link Hole}.
+     *
+     * @param marble Location to move from
+     * @param hole Location to move to
+     * @param deltaRow row change from start
+     * @param deltaCol column change from start
+     * @return true if jump from marble to hole is valid, otherwise false
+     */
+    private boolean checkJump(Location marble, Location hole, int deltaRow, int deltaCol) {
+        if  (marble == null || marble.isHole() || hole == null || !hole.isHole())
+            return false;
+        Location oneAway = atLocation(marble, deltaRow, deltaCol);
+        Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
+        return oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
+    }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to left
+     */
+    public boolean checkJumpLeft(Location start, Location land)
+    { return checkJump(start, land, 0, -1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to above left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to above left
+     */
+    public boolean checkJumpAboveLeft(Location start, Location land)
+    { return checkJump(start, land, -1, 0); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to above right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to above right
+     */
+    public boolean checkJumpAboveRight(Location start, Location land)
+    { return checkJump(start, land, -1, +1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to right
+     */
+    public boolean checkJumpRight(Location start, Location land)
+    { return checkJump(start, land, 0, +1); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to below right.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to below right
+     */
+    public boolean checkJumpBelowRight(Location start, Location land)
+    { return checkJump(start, land, +1, 0); }
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid jump to below left.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid jump to below left
+     */
+    public boolean checkJumpBelowLeft(Location start, Location land)
+    { return checkJump(start, land, +1, -1); }
+
+    /**
+     * Returns <code>true</code> if <code>start</code> to <code>land</code> 
+     * is a valid move. That is, <code>start</code>, a {@link Marble}, is
+     * a jump away from <code>land</code>, a {@link Hole}, with the correct
+     * intervening {@link Marble}s and {@link Hole}s.
+     *
+     * @param start starting Location
+     * @param land landing Location
+     * @return true if start to land is a valid move
+     */
+    public boolean isValidJump(Location start, Location land) {
+        return checkJumpLeft(start, land)
+            || checkJumpAboveLeft(start, land)
+            || checkJumpAboveRight(start, land)
+            || checkJumpRight(start, land)
+            || checkJumpBelowRight(start, land)
+            || checkJumpBelowLeft(start, land);
     }
 
     public List<Location> getAllMoves(Location start) {
-        ArrayList<Location> validMoves = new ArrayList<Location>();
-        if (start.isHole() || start == null)
+        List<Location> validMoves = new ArrayList<Location>();
+        // No point in checking if start is invalid.
+        if (start == null || start.isHole())
             return validMoves;
-        if (checkRight(start, atRight(start)))
+        // Check all six possible moves.
+        if (checkMoveRight(start, atRight(start)))
             validMoves.add(atRight(start));
-        if (checkLeft(start, atLeft(start)))
+        if (checkMoveLeft(start, atLeft(start)))
             validMoves.add(atLeft(start));
-        if (checkAboveRight(start, atAboveRight(start)))
+        if (checkMoveAboveRight(start, atAboveRight(start)))
             validMoves.add(atAboveRight(start));
-        if (checkAboveLeft(start, atAboveLeft(start)))
+        if (checkMoveAboveLeft(start, atAboveLeft(start)))
             validMoves.add(atAboveLeft(start));
-        if (checkBelowRight(start, atBelowRight(start)))
+        if (checkMoveBelowRight(start, atBelowRight(start)))
             validMoves.add(atBelowRight(start));
-        if (checkBelowLeft(start, atBelowLeft(start)))
+        if (checkMoveBelowLeft(start, atBelowLeft(start)))
             validMoves.add(atBelowLeft(start));
-        if (atRight(start) != null && !atRight(start).isHole())
-            if (atRight(atRight(start)) !=null && atRight(atRight(start)).isHole())
-            validMoves.add(atRight(atRight(start)));
-        if (atLeft(start) != null && !atLeft(start).isHole())
-            if (atLeft(atLeft(start)) !=null && atLeft(atLeft(start)).isHole())
-            validMoves.add(atLeft(atLeft(start)));
-        if (atAboveRight(start) != null && !atAboveRight(start).isHole())
-            if (atAboveRight(atAboveRight(start)) !=null && atAboveRight(atAboveRight(start)).isHole())
-            validMoves.add(atAboveRight(atAboveRight(start)));
-        if (atAboveLeft(start) != null && !atAboveLeft(start).isHole())
-            if (atAboveLeft(atAboveLeft(start)) !=null && atAboveLeft(atAboveLeft(start)).isHole())
-            validMoves.add(atAboveLeft(atAboveLeft(start)));
-        if (atBelowRight(start) != null && !atBelowRight(start).isHole())
-            if (atBelowRight(atBelowRight(start)) !=null && atBelowRight(atBelowRight(start)).isHole())
-            validMoves.add(atBelowRight(atBelowRight(start)));
-        if (atBelowLeft(start) != null && !atBelowLeft(start).isHole())
-            if (atBelowLeft(atBelowLeft(start)) !=null && atBelowLeft(atBelowLeft(start)).isHole())
-            validMoves.add(atBelowLeft(atBelowLeft(start)));
-        
+
         return validMoves;
     }
+    public List<Location> getAllJumps(Location start) {
+        List<Location> validJumps = new ArrayList<Location>();
+        // No point in checking if start is invalid.
+        if (start == null || start.isHole())
+            return validJumps;
+        // Check all six possible jumps.
+        if (checkJumpRight(start, atRight(atRight(start))))
+            validJumps.add(atRight(atRight(start)));
+        if (checkJumpLeft(start, atLeft(atLeft(start))))
+            validJumps.add(atLeft(atLeft(start)));
+        if (checkJumpAboveRight(start, atAboveRight(atAboveRight(start))))
+            validJumps.add(atAboveRight(atAboveRight(start)));
+        if (checkJumpAboveLeft(start, atAboveLeft(atAboveLeft(start))))
+            validJumps.add(atAboveLeft(atAboveLeft(start)));
+        if (checkJumpBelowRight(start, atBelowRight(atBelowRight(start))))
+            validJumps.add(atBelowRight(atBelowRight(start)));
+        if (checkJumpBelowLeft(start, atBelowLeft(atBelowLeft(start))))
+            validJumps.add(atBelowLeft(atBelowLeft(start)));
 
-    public void move(Location start, Location land) {
+        return validJumps;
+    }
+
+    /* Returns a {@link List} of all marbles of a given color. */
+    public List<Location> getAllMarbles(Color color) {
+        List<Location> marbles = new ArrayList<Location>();
+        for (int row = 0; row < grid.length; row++)
+            for (int col = 0; col < grid[row].length; col++)
+                if (grid[row][col] != null && !grid[row][col].isHole()
+                   && ((Marble) grid[row][col]).getColor().equals(color))
+                   marbles.add(grid[row][col]);
+        return marbles;
+    }
+
+    public Location move(Location start, Location land) {
         assert isValidMove(start, land) : "Invalid move from " + start + " to " + land;
         grid[start.getRow()][start.getCol()] = new Hole(start.getRow(), start.getCol());
         start.move(land.getRow(), land.getCol());
         grid[land.getRow()][land.getCol()] = start;
+        ChineseCheckers.getBoard().repaint();   // repaint after moving
+        return start;
     }
 
     private char getColorChar(Color color) {

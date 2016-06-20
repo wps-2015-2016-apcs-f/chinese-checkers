@@ -16,7 +16,7 @@ import javax.swing.*;
 public class ChineseCheckers {
 
     // States.
-    private static enum State { WAITING, STARTED, LANDED, };
+    private static enum State { WAITING, STARTED, MOVED, JUMPED, };
 
     /** ChineseCheckers game {@link Window}. */
     private static Board board;
@@ -38,33 +38,46 @@ public class ChineseCheckers {
      */
     public static Grid getGrid() { return grid; }
 
-    private static Location lastLocation;
+    private static Location lastMarble;
 
     public static void clicked(MouseEvent e) {
-        System.out.printf("%s %s\n", state, e);
+        System.out.printf("%s: %s ->", e, state); // RED_FLAG: debugging state transtions
         Location location = getBoard().clickedLocation(e.getPoint());
         switch (state) {
             case WAITING:
                 if (location != null && !location.isHole()) {
-                    lastLocation = location;
+                    lastMarble = location;
                     state = State.STARTED;
                 }
                 break;
             case STARTED:
-                if (location != null && location.isHole() && getGrid().isValidMove(lastLocation, location)) {
-                    getGrid().move(lastLocation, location);
-                    state = State.LANDED;
+                if (location != null && location.isHole() && getGrid().isValidMove(lastMarble, location)) {
+                    lastMarble = getGrid().move(lastMarble, location);
+                    state = State.MOVED;
+                }
+                if (location != null && location.isHole() && getGrid().isValidJump(lastMarble, location)) {
+                    lastMarble = getGrid().move(lastMarble, location);
+                    state = State.JUMPED;
                 }
                 break;
-            case LANDED:
-                if (location != null && location.isHole() && getGrid().isValidMove(lastLocation, location)) {
-                    getGrid().move(lastLocation, location);
-                    state = State.STARTED;
+            case MOVED:
+                if (location != null && location.equals(lastMarble)) {
+                    state = State.WAITING;
+                }
+                break;
+            case JUMPED:
+                if (location != null && location.equals(lastMarble)) {
+                    state = State.WAITING;
+                }
+                if (location != null && location.isHole() && getGrid().isValidJump(lastMarble, location)) {
+                    lastMarble = getGrid().move(lastMarble, location);
+                    state = State.JUMPED;
                 }
                 break;
             default:
                 break;
         }
+        System.out.printf("%s\n", state); // RED_FLAG: debugging state transtions
     }
 
     /**
