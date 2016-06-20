@@ -58,6 +58,23 @@ public class Grid {
     /**
      * Constructs a square {@link Grid} that mirrors the Chinese Checker {@link Board}.
      */
+    
+    public List<Location> allMarbles(Color color)
+    {
+      ArrayList<Location> allMarbles = new ArrayList<Location>();
+      for (int row = 0; row <= SIZE; row++)
+        for (int col = 0; col <= SIZE; col++)
+      {
+        if (grid[row][col] != null && !grid[row][col].isHole())
+        {
+          Marble temp = (Marble)grid[row][col];
+          if (temp.getColor().equals(color))
+          allMarbles.add(grid[row][col]);
+        }
+        }
+      return allMarbles;
+      }
+    
     public Grid()
     {
         assert colorGrid.length == SIZE;
