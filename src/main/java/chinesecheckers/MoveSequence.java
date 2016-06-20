@@ -11,17 +11,17 @@ package chinesecheckers;
 import java.util.*;
 
 public class MoveSequence {
-	
+ 
 //Fields
-	private ArrayList<Hole> moves;
-	private final Hole ENDPOINT;
+ private ArrayList<Hole> moves;
+ private final Hole ENDPOINT;
 
-	//Constructors
-	public MoveSequence(){
-		moves = new ArrayList<Hole>();
-		ENDPOINT = new Hole(0,12);
-	}
-	
+ //Constructors
+ public MoveSequence(){
+  moves = new ArrayList<Hole>();
+  ENDPOINT = new Hole(0,12);
+ }
+ 
 //Methods
 
 	public void add(Hole h){
@@ -51,4 +51,5 @@ public class MoveSequence {
 	public int distanceFromEnd(){
 		return Math.max(Math.abs(moves.get(moves.size()-1).getRow()-ENDPOINT.getRow()), Math.abs(moves.get(moves.size()-1).getCol()-ENDPOINT.getCol()));
 	}
+
 }

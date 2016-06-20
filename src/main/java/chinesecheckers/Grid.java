@@ -9,6 +9,7 @@
 package chinesecheckers;
 
 import java.awt.Color;
+import java.util.*;
 
 /**
  * Grid class mirrors the Chinese Checker {@link Board}.
@@ -210,16 +211,13 @@ public class Grid {
      * @return true if move from marble to hole is valid, otherwise false
      */
     private boolean checkMove(Location marble, Location hole, int deltaRow, int deltaCol) {
-        assert marble != null : "marble == null";
-        assert !marble.isHole() : "marble.isHole()";
-        assert hole != null : "hole == null";
-        assert hole.isHole() : "!hole.isHole()";
+        if  (marble == null || marble.isHole() || hole == null || !hole.isHole())
+         return false;
         Location oneAway = atLocation(marble, deltaRow, deltaCol);
         Location twoAway = atLocation(marble, deltaRow * 2, deltaCol * 2);
         return hole.equals(oneAway)
             || oneAway != null && !oneAway.isHole() && hole.equals(twoAway);
     }
-
     /**
      * Returns <code>true</code> if <code>start</code> to <code>land</code> 
      * is a valid move to left.
@@ -297,6 +295,44 @@ public class Grid {
             || checkRight(start, land)
             || checkBelowRight(start, land)
             || checkBelowLeft(start, land);
+    }
+    
+    public List<Location> getAllMoves(Location start) {
+     ArrayList<Location> validMoves = new ArrayList<Location>();
+     if (start.isHole() || start == null)
+      return validMoves;
+     if (checkRight(start, atRight(start)))
+      validMoves.add(atRight(start));
+     if (checkLeft(start, atLeft(start)))
+      validMoves.add(atLeft(start));
+     if (checkAboveRight(start, atAboveRight(start)))
+      validMoves.add(atAboveRight(start));
+     if (checkAboveLeft(start, atAboveLeft(start)))
+      validMoves.add(atAboveLeft(start));
+     if (checkBelowRight(start, atBelowRight(start)))
+      validMoves.add(atBelowRight(start));
+     if (checkBelowLeft(start, atBelowLeft(start)))
+      validMoves.add(atBelowLeft(start));
+     if (atRight(start) != null && !atRight(start).isHole())
+      if (atRight(atRight(start)) !=null && atRight(atRight(start)).isHole())
+       validMoves.add(atRight(atRight(start)));
+     if (atLeft(start) != null && !atLeft(start).isHole())
+      if (atLeft(atLeft(start)) !=null && atLeft(atLeft(start)).isHole())
+       validMoves.add(atLeft(atLeft(start)));
+     if (atAboveRight(start) != null && !atAboveRight(start).isHole())
+      if (atAboveRight(atAboveRight(start)) !=null && atAboveRight(atAboveRight(start)).isHole())
+       validMoves.add(atAboveRight(atAboveRight(start)));
+     if (atAboveLeft(start) != null && !atAboveLeft(start).isHole())
+      if (atAboveLeft(atAboveLeft(start)) !=null && atAboveLeft(atAboveLeft(start)).isHole())
+       validMoves.add(atAboveLeft(atAboveLeft(start)));
+     if (atBelowRight(start) != null && !atBelowRight(start).isHole())
+      if (atBelowRight(atBelowRight(start)) !=null && atBelowRight(atBelowRight(start)).isHole())
+       validMoves.add(atBelowRight(atBelowRight(start)));
+     if (atBelowLeft(start) != null && !atBelowLeft(start).isHole())
+      if (atBelowLeft(atBelowLeft(start)) !=null && atBelowLeft(atBelowLeft(start)).isHole())
+       validMoves.add(atBelowLeft(atBelowLeft(start)));
+      
+     return validMoves;
     }
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
