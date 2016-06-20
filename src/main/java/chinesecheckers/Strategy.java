@@ -25,6 +25,7 @@ public class Strategy {
 	}
 
     //compiles list of all initial moves of a single marble
+	//BEING MOVED TO GRID!!!
 	public ArrayList<Hole> initialMoves(Location m){
 		ArrayList<Hole> moves = new ArrayList<Hole>(18);
 		int count = 0;
@@ -66,11 +67,19 @@ public class Strategy {
 			tempSequence.add(new Hole(tempMoves.get(indices.get(branch))));
 			tempMoves = initialMoves(tempMoves.get(indices.get(branch)));
 			if(tempMoves.size() == 0){
-				if(bestSequence.distanceFromEnd() < tempSequence.distanceFromEnd()){
+				if(bestSequence.distanceFromEnd() > tempSequence.distanceFromEnd()){
 					bestSequence = tempSequence;
 				}
 				else if(bestSequence.distanceFromEnd() == tempSequence.distanceFromEnd())
 					bestSequence = randomSequence(bestSequence, tempSequence);
+				//goes backwards in tree multiple times if only one move is available at that branch level
+				while(indices.get(branch) >= initialMoves(tempSequence.get(tempSequence.size()-2)).size()){
+					
+					tempSequence.removeLast();
+					tempMoves = initialMoves(tempSequence.get(tempSequence.size()-2));
+					indices.remove(indices.size()-1);
+					branch--;
+				}
 				indices.set(branch, indices.get(branch)+1);
 			}
 			else{
@@ -78,7 +87,6 @@ public class Strategy {
 				branch++;
 			}
 		}
-		MoveSequence moves = new MoveSequence();
 		return bestSequence;
 	}
 	
