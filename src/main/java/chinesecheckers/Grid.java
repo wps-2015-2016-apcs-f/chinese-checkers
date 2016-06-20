@@ -83,6 +83,14 @@ public class Grid {
             }
         }
     }
+    
+    public Grid(Grid that)
+    {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++)
+                that.grid[row][col] = this.grid[row][col];
+        }
+    }
 
     /**
      * Returns {@link Location} at <code>grid[row, col]</code>.
@@ -337,6 +345,7 @@ public class Grid {
         
         return validMoves;
     }
+    
 
     public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
         return true; // STUB
