@@ -7,6 +7,7 @@
 package chinesecheckers;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -14,10 +15,15 @@ import javax.swing.*;
  */
 public class ChineseCheckers {
 
+    // States.
+    private static enum State { WAITING, STARTED, LANDED, };
+
     /** ChineseCheckers game {@link Window}. */
     private static Board board;
     /** ChineseCheckers game {@link Grid}. */
     private static Grid grid;
+    /** ChineseCheckers state {@link State}. */
+    private static State state = State.WAITING;
 
     /**
      * Returns {@link Window} object for this ChineseCheckers game.
@@ -31,6 +37,35 @@ public class ChineseCheckers {
      * @return Grid object for this ChineseCheckers game
      */
     public static Grid getGrid() { return grid; }
+
+    private static Location lastLocation;
+
+    public static void clicked(MouseEvent e) {
+        System.out.printf("%s %s\n", state, e);
+        Location location = getBoard().clickedLocation(e.getPoint());
+        switch (state) {
+            case WAITING:
+                if (location != null && !location.isHole()) {
+                    lastLocation = location;
+                    state = State.STARTED;
+                }
+                break;
+            case STARTED:
+                if (location != null && location.isHole() && getGrid().isValidMove(lastLocation, location)) {
+                    getGrid().move(lastLocation, location);
+                    state = State.LANDED;
+                }
+                break;
+            case LANDED:
+                if (location != null && location.isHole() && getGrid().isValidMove(lastLocation, location)) {
+                    getGrid().move(lastLocation, location);
+                    state = State.STARTED;
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * ChineseCheckers Game main method.

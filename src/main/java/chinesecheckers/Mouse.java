@@ -17,6 +17,7 @@ public class Mouse extends MouseInputAdapter {
     /** Invoked when the mouse button has been clicked (pressed and released) on a component. */
     public void mouseClicked(MouseEvent e) {
         //System.out.printf("%s %s %s; ", e, e.getX(), e.getY());
+        ChineseCheckers.clicked(e);
     }
     /** Invoked when a mouse button has been pressed on a component. */
     public void mousePressed(MouseEvent e) {

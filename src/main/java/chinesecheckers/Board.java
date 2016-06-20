@@ -46,6 +46,20 @@ public class Board extends JPanel {
             && point.getY() >= corner.getY() && point.getY() <= corner.getY() + DIAMETER;
     }
 
+    public Location clickedLocation(Point point) {
+        for (int row = 0; row < Grid.SIZE; row++) {
+            for (int col = 0; col < Grid.SIZE; col++) {
+                // Get grid location and corner point.
+                Location location = ChineseCheckers.getGrid().getLocation(row, col);
+                Point corner = getCorner(row, col);
+                if (isWithin(mouse, corner)) {
+                    return location;
+                }
+            }
+        }
+        return null;
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Draw board objects.

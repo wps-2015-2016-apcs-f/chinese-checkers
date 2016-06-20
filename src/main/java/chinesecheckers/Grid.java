@@ -345,10 +345,12 @@ public class Grid {
         
         return validMoves;
     }
-    
 
-    public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
-        return true; // STUB
+    public void move(Location start, Location land) {
+        assert isValidMove(start, land) : "Invalid move from " + start + " to " + land;
+        grid[start.getRow()][start.getCol()] = new Hole(start.getRow(), start.getCol());
+        start.move(land.getRow(), land.getCol());
+        grid[land.getRow()][land.getCol()] = start;
     }
 
     private char getColorChar(Color color) {
