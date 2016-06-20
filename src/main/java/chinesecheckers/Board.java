@@ -25,7 +25,7 @@ public class Board extends JPanel {
     private static final Color BOARD_COLOR = UIManager.getColor("Panel.background");
     private static final Color HOLE_COLOR = Color.LIGHT_GRAY; 
 
-    /** Holds last point of mouse movement. */
+    /** Holds last point of mouse movement. Set by {@link Mouse}. */
     private Point mouse = null;
     public void setPoint(Point point) { mouse = point; }
 
@@ -47,7 +47,7 @@ public class Board extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
+        super.paintComponent(g);
         // Draw board objects.
         for (int row = 0; row < Grid.SIZE; row++) {
             for (int col = 0; col < Grid.SIZE; col++) {
@@ -71,7 +71,6 @@ public class Board extends JPanel {
         }
     }
 
-    // RED_FLAG: this is not correct... need a better notion of the total board size
     public Dimension getPreferredSize() {
         Point corner = getCorner(Grid.SIZE - 1, Grid.SIZE - 1);
         int width = (int) corner.getX() + DIAMETER;
