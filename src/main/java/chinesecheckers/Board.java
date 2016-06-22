@@ -68,7 +68,12 @@ public class Board extends JPanel {
                 // Get grid location and corner point.
                 Location location = ChineseCheckers.getGrid().getLocation(row, col);
                 Point corner = getCorner(row, col);
-                // Set board color.
+                // Highlight location under mouse.
+                if (location != null && mouse != null && isWithin(mouse, corner)) {
+                    g.setColor(Color.ORANGE);
+                    g.fillRect((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                }
+                // Set board  / hole / marble color.
                 if (location == null)
                     g.setColor(BOARD_COLOR);
                 else if (location.isHole())
@@ -76,10 +81,11 @@ public class Board extends JPanel {
                 else g.setColor(((Marble) location).getColor());
                 // Draw marble or hole.
                 g.fillOval((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
-                // Highlight location under mouse.
-                if (location != null && mouse != null && isWithin(mouse, corner)) {
-                    g.setColor(Color.ORANGE);
-                    g.fillRect((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
+                // Draw smaller dot of opposite color on selected marble.
+                Marble lastMarble = ChineseCheckers.getLastMarble() ;
+                if (lastMarble != null && lastMarble.equals(location)) {
+                    g.setColor(lastMarble.getOppositeColor());
+                    g.fillOval((int) corner.getX() + DIAMETER / 4, (int) corner.getY() + DIAMETER / 4, DIAMETER / 2, DIAMETER / 2);
                 }
             }
         }

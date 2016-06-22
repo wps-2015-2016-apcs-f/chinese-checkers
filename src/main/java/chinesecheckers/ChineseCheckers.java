@@ -38,7 +38,8 @@ public class ChineseCheckers {
      */
     public static Grid getGrid() { return grid; }
 
-    private static Location lastMarble;
+    private static Marble lastMarble = null;  // signifies move completed
+    public static Marble getLastMarble() { return lastMarble; }
 
     public static void clicked(MouseEvent e) {
         System.out.printf("%s: %s ->", e, state); // RED_FLAG: debugging state transtions
@@ -46,11 +47,15 @@ public class ChineseCheckers {
         switch (state) {
             case WAITING:
                 if (location != null && !location.isHole()) {
-                    lastMarble = location;
+                    lastMarble = (Marble) location;
                     state = State.STARTED;
                 }
                 break;
             case STARTED:
+                if (location != null && location.equals(lastMarble)) {
+                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
+                    state = State.WAITING;
+                }
                 if (location != null && location.isHole() && getGrid().isValidMove(lastMarble, location)) {
                     lastMarble = getGrid().move(lastMarble, location);
                     state = State.MOVED;
@@ -62,11 +67,13 @@ public class ChineseCheckers {
                 break;
             case MOVED:
                 if (location != null && location.equals(lastMarble)) {
+                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
                     state = State.WAITING;
                 }
                 break;
             case JUMPED:
                 if (location != null && location.equals(lastMarble)) {
+                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
                     state = State.WAITING;
                 }
                 if (location != null && location.isHole() && getGrid().isValidJump(lastMarble, location)) {
@@ -77,6 +84,7 @@ public class ChineseCheckers {
             default:
                 break;
         }
+        ChineseCheckers.getBoard().repaint();   // repaint after every click
         System.out.printf("%s\n", state); // RED_FLAG: debugging state transtions
     }
 

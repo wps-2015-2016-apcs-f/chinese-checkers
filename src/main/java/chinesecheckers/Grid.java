@@ -458,13 +458,12 @@ public class Grid {
         return marbles;
     }
 
-    public Location move(Location start, Location land) {
+    public Marble move(Location start, Location land) {
         assert isValidMove(start, land) : "Invalid move from " + start + " to " + land;
         grid[start.getRow()][start.getCol()] = new Hole(start.getRow(), start.getCol());
         start.move(land.getRow(), land.getCol());
         grid[land.getRow()][land.getCol()] = start;
-        ChineseCheckers.getBoard().repaint();   // repaint after moving
-        return start;
+        return (Marble) start;
     }
 
     private char getColorChar(Color color) {

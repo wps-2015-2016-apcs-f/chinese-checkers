@@ -56,6 +56,18 @@ public class Marble extends Location {
     public Color getColor() { return color; }
 
     /**
+     * Returns oposite color of this {@link Marble}.
+     *
+     * @return opposite color of this Marble
+     */
+    public Color getOppositeColor() {
+        return new Color(
+            (color.getRGB() >> 16 ^ 255) & 255,
+            (color.getRGB() >>  8 ^ 255) & 255,
+            (color.getRGB() >>  0 ^ 255) & 255);
+    }
+
+    /**
      * Set the {@link Color} of this {@link Location}.
      *
      * @param color new color for this Marble
