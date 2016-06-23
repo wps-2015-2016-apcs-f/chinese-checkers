@@ -46,7 +46,7 @@ public class Hole extends Location {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Hole@");
-        return sb.append(super.toString()).toString();
+        StringBuilder sb = new StringBuilder(super.toString());
+        return sb.append(")").toString();
     }
 }

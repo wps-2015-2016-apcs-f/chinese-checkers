@@ -81,7 +81,7 @@ public abstract class Location {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("(");
-        return sb.append(row).append(",").append(col).append(")").toString();
+        StringBuilder sb = new StringBuilder(getClass().getName());
+        return sb.append("@(").append(row).append(",").append(col).toString();
     }
 }

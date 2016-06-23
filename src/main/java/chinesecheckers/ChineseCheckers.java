@@ -42,7 +42,7 @@ public class ChineseCheckers {
     public static Marble getLastMarble() { return lastMarble; }
 
     public static void clicked(MouseEvent e) {
-        System.out.printf("%s: %s ->", e, state); // RED_FLAG: debugging state transtions
+        System.out.printf("%s: %s->", e, state); // RED_FLAG: debugging state transtions
         Location location = getBoard().clickedLocation(e.getPoint());
         switch (state) {
             case WAITING:
@@ -108,6 +108,5 @@ public class ChineseCheckers {
         c.add(board);
         frame.pack();
         frame.setVisible(true);
-        System.out.print(grid);
     }
 }

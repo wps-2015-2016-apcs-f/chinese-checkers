@@ -15,7 +15,7 @@ public class Marble extends Location {
     /** RED_FLAG: temporary until we have a default Color in Grid */
     private static final Color NONE = Color.PINK;
     /** Holds marble {@link Color}. */
-    private Color color = NONE;
+    private Color color;
 
     /**
      * Constructs a {@link Marble}.
@@ -45,7 +45,7 @@ public class Marble extends Location {
      * @param that Marble to copy
      */
     public Marble(Marble that) {
-        this(that.getRow(), that.getCol(), that.color);
+        this(that.getRow(), that.getCol(), that.getColor());
     }
 
     /**
@@ -91,7 +91,7 @@ public class Marble extends Location {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Marble@");
-        return sb.append(super.toString()).toString();
+        StringBuilder sb = new StringBuilder(super.toString());
+        return sb.append(",").append(color).append(")").toString();
     }
 }

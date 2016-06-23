@@ -73,7 +73,7 @@ public class Board extends JPanel {
                     g.setColor(Color.ORANGE);
                     g.fillRect((int) corner.getX(), (int) corner.getY(), DIAMETER, DIAMETER);
                 }
-                // Set board  / hole / marble color.
+                // Set board / hole / marble color.
                 if (location == null)
                     g.setColor(BOARD_COLOR);
                 else if (location.isHole())
