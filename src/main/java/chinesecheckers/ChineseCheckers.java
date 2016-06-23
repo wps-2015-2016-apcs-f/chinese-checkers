@@ -53,30 +53,31 @@ public class ChineseCheckers {
                 break;
             case STARTED:
                 if (location != null && location.equals(lastMarble)) {
-                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
+                    lastMarble = null;          // signifies move completed
                     state = State.WAITING;
                 }
-                if (location != null && location.isHole() && getGrid().isValidMove(lastMarble, location)) {
+                if (location != null && getGrid().isValidMove(lastMarble, location)) {
                     lastMarble = getGrid().move(lastMarble, location);
                     state = State.MOVED;
                 }
-                if (location != null && location.isHole() && getGrid().isValidJump(lastMarble, location)) {
+                if (location != null && getGrid().isValidJump(lastMarble, location)) {
                     lastMarble = getGrid().move(lastMarble, location);
                     state = State.JUMPED;
                 }
                 break;
             case MOVED:
+                // RED_FLAG: no undo for a move... lastMarble is only valid click
                 if (location != null && location.equals(lastMarble)) {
-                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
+                    lastMarble = null;          // signifies move completed
                     state = State.WAITING;
                 }
                 break;
             case JUMPED:
                 if (location != null && location.equals(lastMarble)) {
-                    lastMarble = null;          // signifies move completed                    state = State.WAITING;
+                    lastMarble = null;          // signifies move completed
                     state = State.WAITING;
                 }
-                if (location != null && location.isHole() && getGrid().isValidJump(lastMarble, location)) {
+                if (location != null && getGrid().isValidJump(lastMarble, location)) {
                     lastMarble = getGrid().move(lastMarble, location);
                     state = State.JUMPED;
                 }
